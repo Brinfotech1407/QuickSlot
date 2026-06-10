@@ -15,6 +15,12 @@ class ApiInterceptor extends Interceptor {
       options.headers['Authorization'] = 'Bearer $token';
     }
 
+    final userId =
+        _localStorageService.getInt(LocalStorageService.selectedUserIdKey);
+    if (userId != null) {
+      options.headers['X-User-Id'] = userId.toString();
+    }
+
     AppLogger.log('REQUEST[${options.method}] => ${options.uri}');
     handler.next(options);
   }

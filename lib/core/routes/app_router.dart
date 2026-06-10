@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/presentation/cubit/home_cubit.dart';
+import '../../features/booking/presentation/cubit/booking_cubit.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/splash/presentation/cubit/splash_cubit.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
@@ -24,7 +24,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.home,
         builder: (context, state) => BlocProvider(
-          create: (_) => sl<HomeCubit>()..loadItems(),
+          create: (_) => sl<BookingCubit>()..initialize(),
           child: const HomeScreen(),
         ),
       ),

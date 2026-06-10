@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   static const String _tokenKey = 'auth_token';
+  static const String selectedUserIdKey = 'selected_user_id';
 
   late final SharedPreferences _preferences;
 
@@ -23,6 +24,12 @@ class LocalStorageService {
 
   Future<bool> setString(String key, String value) {
     return _preferences.setString(key, value);
+  }
+
+  int? getInt(String key) => _preferences.getInt(key);
+
+  Future<bool> setInt(String key, int value) {
+    return _preferences.setInt(key, value);
   }
 
   Future<bool> remove(String key) => _preferences.remove(key);

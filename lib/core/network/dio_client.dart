@@ -61,14 +61,37 @@ class DioClient {
     }
   }
 
+  Future<Response<dynamic>> delete(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    try {
+      return await _dio.delete<dynamic>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (error) {
+      throw _handleDioException(error);
+    }
+  }
+
   AppException _handleDioException(DioException error) {
     final responseData = error.response?.data;
-    final message = responseData is Map<String, dynamic>
-        ? responseData['message'] as String? ?? error.message
-        : error.message;
+    String? message;
+    if (responseData is Map<String, dynamic>) {
+      final nestedError = responseData['error'];
+      message = responseData['message'] as String?;
+      if (message == null && nestedError is Map<String, dynamic>) {
+        message = nestedError['message'] as String?;
+      }
+    }
 
     return AppException(
-      message: message ?? 'Something went wrong',
+      message: message ?? error.message ?? 'Something went wrong',
       statusCode: error.response?.statusCode,
       details: responseData,
     );
