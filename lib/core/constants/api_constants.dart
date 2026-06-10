@@ -2,7 +2,7 @@ class ApiConstants {
   const ApiConstants._();
 
   static const String baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
+    'quickslot-backend-production.up.railway.app',
     defaultValue: 'http://10.0.2.2:3000',
   );
   static const Duration connectTimeout = Duration(seconds: 20);
